@@ -34,5 +34,4 @@ jobs:
           java-version: '17'
 
       - name: Build with Maven
-        working-directory: backend
         run: ./mvnw clean package
