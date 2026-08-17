@@ -31,3 +31,15 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local backups
+*.backup
+
+# Helm packaged charts
+*.tgz
+
+# Python virtual environments
+.venv/
+
+backend/gitleaks-report.json
+backend/\[Help

@@ -1,13 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 function App() {
+  const [students, setStudents] = useState([])
+
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [course, setCourse] = useState('')
-  const [students, setStudents] = useState([])
-  const [editingIndex, setEditingIndex] = useState(null)
 
-  // CREATE
+  const [editingId, setEditingId] = useState(null)
+
+  // GET - Load students from backend
+  useEffect(() => {
+    axios
+      .get('/api/students')
+      .then((response) => {
+        setStudents(response.data)
+      })
+      .catch((error) => {
+        console.error('Error fetching students:', error)
+      })
+  }, [])
+
+  // CREATE - Add student
   const addStudent = () => {
     const newStudent = {
       name: name,
@@ -15,53 +30,69 @@ function App() {
       course: course,
     }
 
-    setStudents([...students, newStudent])
+    axios
+      .post('/api/students', newStudent)
+      .then((response) => {
+        setStudents([...students, response.data])
 
-    setName('')
-    setEmail('')
-    setCourse('')
+        setName('')
+        setEmail('')
+        setCourse('')
+      })
+      .catch((error) => {
+        console.error('Error adding student:', error)
+      })
   }
 
-  // DELETE
-  const deleteStudent = (indexToDelete) => {
-    const updatedStudents = students.filter(
-      (_, index) => index !== indexToDelete
-    )
-
-    setStudents(updatedStudents)
+  // DELETE - Delete student
+  const deleteStudent = (id) => {
+    axios
+      .delete(`/api/students/${id}`)
+      .then(() => {
+        setStudents(
+          students.filter((student) => student.id !== id)
+        )
+      })
+      .catch((error) => {
+        console.error('Error deleting student:', error)
+      })
   }
 
-  // EDIT
-  const editStudent = (index) => {
-    const student = students[index]
-
+  // EDIT - Load student data into form
+  const editStudent = (student) => {
+    setEditingId(student.id)
     setName(student.name)
     setEmail(student.email)
     setCourse(student.course)
-
-    setEditingIndex(index)
   }
 
-  // UPDATE
+  // UPDATE - Update student
   const updateStudent = () => {
-    const updatedStudents = students.map((student, index) => {
-      if (index === editingIndex) {
-        return {
-          name: name,
-          email: email,
-          course: course,
-        }
-      }
+    const updatedStudent = {
+      name: name,
+      email: email,
+      course: course,
+    }
 
-      return student
-    })
+    axios
+      .put(`/api/students/${editingId}`, updatedStudent)
+      .then((response) => {
+        setStudents(
+          students.map((student) =>
+            student.id === editingId
+              ? response.data
+              : student
+          )
+        )
 
-    setStudents(updatedStudents)
-
-    setName('')
-    setEmail('')
-    setCourse('')
-    setEditingIndex(null)
+        setName('')
+        setEmail('')
+        setCourse('')
+        setEditingId(null)
+      })
+      .catch((error) => {
+        console.error('Error updating student:', error)
+      })
   }
 
   return (
@@ -76,7 +107,8 @@ function App() {
         placeholder="Enter student name"
       />
 
-      <p>Name: {name}</p>
+      <br />
+      <br />
 
       <label>Student Email</label>
       <input
@@ -86,7 +118,8 @@ function App() {
         placeholder="Enter student email"
       />
 
-      <p>Email: {email}</p>
+      <br />
+      <br />
 
       <label>Course</label>
       <input
@@ -96,21 +129,22 @@ function App() {
         placeholder="Enter course"
       />
 
-      <p>Course: {course}</p>
+      <br />
+      <br />
 
-      {editingIndex === null ? (
-        <button type="button" onClick={addStudent}>
+      {editingId === null ? (
+        <button onClick={addStudent}>
           Add Student
         </button>
       ) : (
-        <button type="button" onClick={updateStudent}>
+        <button onClick={updateStudent}>
           Update Student
         </button>
       )}
 
       <h2>Students</h2>
 
-      <table>
+      <table border="1">
         <thead>
           <tr>
             <th>ID</th>
@@ -122,25 +156,19 @@ function App() {
         </thead>
 
         <tbody>
-          {students.map((student, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
+          {students.map((student) => (
+            <tr key={student.id}>
+              <td>{student.id}</td>
               <td>{student.name}</td>
               <td>{student.email}</td>
               <td>{student.course}</td>
 
               <td>
-                <button
-                  type="button"
-                  onClick={() => editStudent(index)}
-                >
+                <button onClick={() => editStudent(student)}>
                   Edit
                 </button>
 
-                <button
-                  type="button"
-                  onClick={() => deleteStudent(index)}
-                >
+                <button onClick={() => deleteStudent(student.id)}>
                   Delete
                 </button>
               </td>
