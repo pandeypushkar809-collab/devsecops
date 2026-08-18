@@ -1101,13 +1101,6 @@ Argo CD
     ↓
 Falco
     ↓
-Prometheus + Grafana<img width="1325" height="599" alt="WhatsApp Image 2026-08-17 at 8 11 58 PM" src="https://github.com/user-attachments/assets/21765daa-95af-4803-a540-18ef02019af1" />
-<img width="906" height="661" alt="4" src="https://github.com/user-attachments/assets/69d3d67f-3281-4e70-9380-1e148854a78a" />
-<img width="1307" height="555" alt="3" src="https://github.com/user-attachments/assets/471fc294-3775-4943-b4db-187136b7ad43" />
-<img width="629" height="671" alt="2" src="https://github.com/user-attachments/assets/88696933-b200-4c58-954b-b20a5d6b7fba" />
-<img width="1019" height="498" alt="1" src="https://github.com/user-attachments/assets/6720a89d-2f46-4294-8414-634cc45bc0c9" />
-
-    ↓
 Continuous Improvement
 ```
 
@@ -1259,6 +1252,20 @@ PROTECT
 ```
 
 > **Build securely. Deploy automatically. Operate reliably.**
+
+<img width="1019" height="498" alt="1" src="https://github.com/user-attachments/assets/c06fe06d-511d-48e9-8f64-76d54f6ed0ae" />
+
+<img width="629" height="671" alt="2" src="https://github.com/user-attachments/assets/aa4e5b27-190d-4518-8762-021901edc442" />
+
+<img width="1307" height="555" alt="3" src="https://github.com/user-attachments/assets/da6fefc8-7582-448e-9418-c41e57dc9401" />
+
+<img width="906" height="661" alt="4" src="https://github.com/user-attachments/assets/c3e77bed-79b1-42dc-8fab-ca95874bafa0" />
+
+<img width="1325" height="599" alt="WhatsApp Image 2026-08-17 at 8 11 58 PM" src="https://github.com/user-attachments/assets/b77a8716-ac85-497f-aa67-0433c224294a" />
+
+
+
+
 
 
 
